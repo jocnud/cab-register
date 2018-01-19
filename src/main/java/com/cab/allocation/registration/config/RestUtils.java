@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -25,14 +26,17 @@ public class RestUtils {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> entity = new HttpEntity<Object>(headers);
 
-		
-		ResponseEntity<Void> out = restTemplate
-				.exchange("/dropPoints?name=" + dropPoint, HttpMethod.HEAD, entity,
-				Void.class);
-		
-		if (out.getStatusCode() == HttpStatus.OK)
-			return true;
-		return false;
+		try {
+			ResponseEntity<Void> out = restTemplate.exchange("/dropPoints?name=" + dropPoint, HttpMethod.HEAD, entity,
+					Void.class);
+			if (out.getStatusCode() == HttpStatus.OK)
+				return true;
+			return false;
+
+		} catch (RestClientException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 
 	}
 

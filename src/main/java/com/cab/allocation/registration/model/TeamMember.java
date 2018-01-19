@@ -3,6 +3,7 @@ package com.cab.allocation.registration.model;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
@@ -12,6 +13,7 @@ public class TeamMember {
 	private String id;
 
 	@NotNull
+	@Indexed(unique=true)
 	private String teamMemberId;
 	@NotNull
 	private Gender gender;

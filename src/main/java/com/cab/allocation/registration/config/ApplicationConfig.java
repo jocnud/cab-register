@@ -8,10 +8,10 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ApplicationConfig {
-	
+
 	@Value("${rootUri}")
 	private String rootUri;
-	
+
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplateBuilder().rootUri(rootUri).build();
